@@ -37,18 +37,31 @@ internal static class ReflectionMemberAccessorTests
         Assert.Equal(typeof(DerivedFixture), declaringType);
     }
 
+    public static void DoesNotFallBackWhenDerivedGetterThrows()
+    {
+        var instance = new DerivedFixture();
+
+        var value = ReflectionMemberAccessor.TryGetValue(
+            instance, "_throwing", out var declaringType);
+
+        Assert.Null(value);
+        Assert.Equal(typeof(DerivedFixture), declaringType);
+    }
+
     private class BaseFixture
     {
         private readonly string _baseField = "base-field";
         private readonly string _shadowed = "base";
+        private readonly string _throwing = "base";
         private string BaseProperty => "base-property";
 
-        public string KeepFieldsReferenced() => _baseField + _shadowed;
+        public string KeepFieldsReferenced() => _baseField + _shadowed + _throwing;
     }
 
     private sealed class DerivedFixture : BaseFixture
     {
         private readonly string _shadowed = "derived";
+        private string _throwing => throw new InvalidOperationException("fixture getter failure");
 
         public string KeepFieldReferenced() => _shadowed;
     }
