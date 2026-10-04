@@ -4675,6 +4675,7 @@ internal static class GameStateService
             });
 
             var amount = GetReflectedNullableIntProperty(power, "Amount");
+            var displayAmount = GetReflectedNullableIntProperty(power, "DisplayAmount");
 
             var isDebuff = string.Equals(
                 GetReflectedProperty(power, "TypeForCurrentAmount")?.ToString()
@@ -4688,6 +4689,7 @@ internal static class GameStateService
                 power_id = string.IsNullOrWhiteSpace(idEntry) ? "unknown_power" : idEntry,
                 name = string.IsNullOrWhiteSpace(title) ? idEntry : title,
                 amount = amount,
+                display_amount = displayAmount,
                 is_debuff = isDebuff
             });
             index += 1;
@@ -7063,19 +7065,6 @@ internal sealed class CombatLethalRiskPayload
     public string? power_id { get; init; }
 
     public int? power_amount { get; init; }
-}
-
-internal sealed class CombatPowerPayload
-{
-    public int index { get; init; }
-
-    public string power_id { get; init; } = string.Empty;
-
-    public string name { get; init; } = string.Empty;
-
-    public int? amount { get; init; }
-
-    public bool is_debuff { get; init; }
 }
 
 internal sealed class RewardPayload

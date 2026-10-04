@@ -151,6 +151,10 @@ internal static class TestRunner
         yield return ("DeckSelection.IntermediateSettle", () => Task.Run(DeckSelectionContractTests.IntermediateRequiredPickSettlesOnSelectionProgress));
         yield return ("CombatDiagnostics.CanPlay", () => Task.Run(CombatDiagnosticsContractTests.HandPayloadKeepsNativeCanPlayEvidence));
         yield return ("CombatDiagnostics.Readiness", () => Task.Run(CombatDiagnosticsContractTests.CombatPayloadDistinguishesQueueModalAndSnapshotLocks));
+        yield return ("CombatPower.NativeCounter", () => Task.Run(CombatPowerPayloadTests.SerializesNativeCounterSeparatelyFromAmount));
+        yield return ("CombatPower.ExhaustedCounter", () => Task.Run(CombatPowerPayloadTests.PreservesExhaustedNativeCounter));
+        yield return ("CombatPower.UnknownCounter", () => Task.Run(CombatPowerPayloadTests.KeepsUnavailableNativeCounterUnknown));
+        yield return ("CombatPower.NativeWiring", () => Task.Run(CombatPowerPayloadTests.StateReadsTheNativeCounterWithoutFallback));
         yield return ("AgentLoop.PlayOnce", AgentLoopTests.PlayOnce_ExecutesSingleValidatedAct);
         yield return ("AgentLoop.CrystalArgs", AgentLoopTests.PlayOnce_ForwardsCrystalSphereArguments);
         yield return ("AgentTools.CrystalSchema", () => Task.Run(AgentLoopTests.ActToolSchema_IncludesCrystalSphereArguments));
